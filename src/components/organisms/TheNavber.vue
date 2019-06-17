@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import VListActionContent from '~/components/molucules/VListActionContent'
-import VListAvatarContent from '~/components/molucules/VListAvatarContent'
+import VListActionContent from '~/components/molecules/VListActionContent'
+import VListAvatarContent from '~/components/molecules/VListAvatarContent'
 export default {
   components: {
     VListAvatarContent,

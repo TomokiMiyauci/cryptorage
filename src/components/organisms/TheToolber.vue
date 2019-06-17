@@ -1,42 +1,38 @@
 <template>
   <v-toolbar app flat fixed clipped-left>
     <v-toolbar-side-icon @click="switchDrawer" />
-    <v-toolbar-title>Awesome Investor</v-toolbar-title>
+    <v-toolbar-title class="text-uppercase">
+      <v-icon>fab fa-connectdevelop</v-icon>
+      <span>Cryptorage</span>
+    </v-toolbar-title>
     <v-spacer />
     <v-toolbar-items>
-      <div class="mt-2">
-        <v-badge overlap>
-          <template v-slot:badge>
-            <span>1</span>
-          </template>
-
-          <v-btn icon>
-            <v-icon>notifications</v-icon>
-          </v-btn>
-        </v-badge>
-      </div>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>account_circle</v-icon>
-          </v-btn>
-        </template>
-        <span>Profile</span>
-      </v-tooltip>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>logout</v-icon>
-          </v-btn>
-        </template>
-        <span>Logout</span>
-      </v-tooltip>
+      <v-tooltip-botton-icon
+        v-for="i in items"
+        :key="i.tooltip"
+        :icon="i.icon"
+        :tooltip="i.tooltip"
+        :link="i.link"
+      ></v-tooltip-botton-icon>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
+import VTooltipBottonIcon from '~/components/molecules/VTooltipBottonIcon'
 export default {
+  components: {
+    VTooltipBottonIcon
+  },
+  data() {
+    return {
+      items: [
+        { icon: 'fas fa-code-branch', tooltip: 'Loadmap', link: '/loadmap' },
+        { icon: 'fab fa-github', tooltip: 'Github', link: '/' },
+        { icon: 'logout', tooltip: 'Logout', link: '/logout' }
+      ]
+    }
+  },
   methods: {
     switchDrawer() {
       this.$emit('switchDrawer')

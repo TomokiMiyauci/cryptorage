@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+// import '@fortawesome/fontawesome-free/css/all.css'
 export default {
   mode: 'universal',
   srcDir: 'src/',
@@ -24,6 +24,10 @@ export default {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
+      },
+      {
+        href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
+        rel: 'stylesheet'
       }
     ]
   },
@@ -70,7 +74,8 @@ export default {
       warning: colors.amber.base,
       error: colors.deepOrange.accent4,
       success: colors.green.accent3
-    }
+    },
+    iconfont: 'fa'
   },
   /*
    ** Build configuration
