@@ -2,7 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   mode: 'universal',
-  srcDir: '/src',
+  srcDir: 'src/',
   /*
    ** Headers of the page
    */
@@ -53,7 +53,10 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: { proxy: true },
+  proxy: {
+    '/api/': 'https://coincheck.com'
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
