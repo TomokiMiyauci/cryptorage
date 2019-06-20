@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-// import '@fortawesome/fontawesome-free/css/all.css'
 export default {
   mode: 'universal',
   srcDir: 'src/',
@@ -24,10 +23,6 @@ export default {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
-      },
-      {
-        href: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css',
-        rel: 'stylesheet'
       }
     ]
   },
@@ -38,7 +33,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@fortawesome/fontawesome-free/css/all.css'],
   /*
    ** Plugins to load before mounting the App
    */

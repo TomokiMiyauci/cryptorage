@@ -1,39 +1,77 @@
 <template>
   <div>
-    <v-btn @click="set"></v-btn>
-    <p>{{ price }}</p>
+    <v-layout wrap row>
+      <v-flex xs6>
+        <v-data-table :headers="headers" :items="items">
+          <template #items="{item}">
+            <td class="text-xs-center">{{ item.ticker }}</td>
+            <td class="text-xs-center">{{ item.ask | comma }}</td>
+            <td class="text-xs-center">{{ item.spread | comma }}</td>
+            <td class="text-xs-center">{{ item.bid | comma }}</td>
+          </template>
+        </v-data-table>
+      </v-flex>
+      <v-flex xs6>
+        <v-data-table :headers="headers" :items="items">
+          <template #items="{item}">
+            <td class="text-xs-center">{{ item.ticker }}</td>
+            <td class="text-xs-center">{{ item.ask | comma }}</td>
+            <td class="text-xs-center">{{ item.spread | comma }}</td>
+            <td class="text-xs-center">{{ item.bid | comma }}</td>
+          </template>
+        </v-data-table>
+      </v-flex>
+    </v-layout>
+    <p>{{ ticker }}</p>
   </div>
 </template>
 
 <script>
+import {
+  GET_TICKER,
+  GET_ORDER,
+  GET_EXCHANGE_RATE
+} from '~/store/mutation-types'
+import { mapState, mapActions } from 'vuex'
 export default {
-  data() {
-    return {
-      price: {}
+  filters: {
+    comma: function(value) {
+      return value.toLocaleString()
     }
   },
+  data() {
+    return {
+      id: undefined,
+      headers: [
+        { text: 'Ticker', value: 'ticker', align: 'center' },
+        { text: 'Ask', value: 'ask', align: 'center' },
+        { text: 'Spread', value: 'spread', align: 'center' },
+        { text: 'Bid', value: 'bid', align: 'center' }
+      ],
+      items: []
+    }
+  },
+  computed: mapState('coincheck', ['ticker', 'order', 'exchangeRate']),
   created() {
-    this.getPrice()
-    setInterval(() => {
-      this.getPrice()
-    }, 2000)
+    console.log('created')
+    this.id = setInterval(() => {
+      this.getTicker()
+    }, 3000)
   },
   destroyed() {
-    clearInterval(this.getPrice())
+    console.log('destroyed')
+    clearInterval(this.id)
   },
   methods: {
-    set() {
-      setInterval(() => {
-        this.i++
-      }, 2000)
+    ...mapActions('coincheck', [GET_TICKER, GET_ORDER, GET_EXCHANGE_RATE]),
+    async getTicker() {
+      await this.GET_TICKER()
+      const { ask, bid } = this.ticker
+      this.arraySplice(0, { ticker: 'BTCJPY', ask, bid, spread: ask - bid })
+      this.arraySplice(1, { ticker: 'XRPJPY', ask, bid, spread: 1 })
     },
-    counter() {
-      this.i++
-    },
-    async getPrice() {
-      console.log(1)
-      const price = await this.$axios.$get('http://localhost:3000/api/ticker')
-      this.price = price
+    arraySplice(number, obj) {
+      this.items.splice(number, 1, obj)
     }
   }
 }

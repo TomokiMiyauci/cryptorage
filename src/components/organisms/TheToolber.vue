@@ -28,7 +28,7 @@ export default {
     return {
       items: [
         { icon: 'fas fa-code-branch', tooltip: 'Loadmap', link: '/loadmap' },
-        { icon: 'fab fa-github', tooltip: 'Github', link: '/' },
+        { icon: 'fab fa-github', tooltip: 'Github', link: '/acv' },
         { icon: 'logout', tooltip: 'Logout', link: '/logout' }
       ]
     }
