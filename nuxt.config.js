@@ -17,6 +17,11 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
+    script: [
+      { src: 'https://code.highcharts.com/highcharts.js' },
+      { src: 'https://code.highcharts.com/highcharts-more.js' },
+      { src: 'https://code.highcharts.com/modules/solid-gauge.js' }
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
@@ -37,7 +42,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/filters'],
   /*
    ** Nuxt.js modules
    */

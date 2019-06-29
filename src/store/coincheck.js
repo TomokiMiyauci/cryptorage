@@ -2,13 +2,15 @@ import {
   GET_TICKER,
   GET_ORDER,
   GET_EXCHANGE_RATE,
+  GET_STORE_RATE,
   GET_PRICE
 } from './mutation-types.js'
 export const state = () => ({
-  ticker: {},
-  order: {},
-  exchangeRate: {},
-  price: {}
+  ticker: null,
+  order: null,
+  exchangeRate: null,
+  storeRate: null,
+  price: null
 })
 
 export const mutations = {
@@ -20,6 +22,9 @@ export const mutations = {
   },
   [GET_EXCHANGE_RATE](state, payload) {
     state.exchangeRate = payload
+  },
+  [GET_STORE_RATE](state, payload) {
+    state.storeRate = payload
   },
   [GET_PRICE](state, payload) {
     state.price = payload
@@ -42,14 +47,15 @@ export const actions = {
       .$get('http://localhost:3000/api/exchange/orders/rate')
       .then(res => commit(GET_EXCHANGE_RATE, res))
   },
-  async [GET_PRICE]({ commit }, payload) {
+  async [GET_STORE_RATE]({ commit }, pair) {
+    await this.$axios
+      .$get(`http://localhost:3000/api/rate/${pair}`)
+      .then(res => commit(GET_STORE_RATE, res))
+  },
+  async [GET_PRICE]({ commit }, { pair, orderType, price, amount }) {
     await this.$axios
       .$get('http://localhost:3000/api/exchange/orders/rate', {
-        params: {
-          pair: 'btc_jpy',
-          order_type: payload.type,
-          amount: 12
-        }
+        params: { pair, amount, price, order_type: orderType }
       })
       .then(res => commit(GET_PRICE, res))
   }

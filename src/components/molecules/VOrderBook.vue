@@ -1,9 +1,9 @@
 <template>
   <v-data-table :headers="header" :items="items" loading hide-actions>
     <template #items="{item}">
-      <td class="text-xs-center">{{ item.askAmount }}</td>
-      <td class="text-xs-center">{{ item.rate }}</td>
-      <td class="text-xs-center">{{ item.bidAmount }}</td>
+      <td class="text-xs-center">{{ item.askAmount | digit2 | camma }}</td>
+      <td class="text-xs-center">{{ item.rate | digit2 | camma }}</td>
+      <td class="text-xs-center">{{ item.bidAmount | digit2 | camma }}</td>
     </template>
   </v-data-table>
 </template>

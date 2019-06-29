@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-sm fluid>
+  <v-container grid-list-md fluid>
     <v-layout wrap>
       <v-flex v-for="i in markets" :key="i.name" xs4 d-flex>
         <v-hover>

@@ -1,11 +1,13 @@
 <template>
   <div>
-    <p>sfiajo</p>
+    <v-parallax src></v-parallax>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  layout: 'index'
+}
 </script>
 
 <style></style>

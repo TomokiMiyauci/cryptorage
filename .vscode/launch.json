@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/src/plugins/coin.js"
+      "program": "${workspaceFolder}/src/store/coin.js"
     },
     {
       "type": "node",

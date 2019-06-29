@@ -1,29 +1,23 @@
 <template>
-  <div>
+  <v-container grid-list-xl>
     <v-layout wrap row>
-      <v-flex xs6>
-        <v-data-table :headers="headers" :items="items">
-          <template #items="{item}">
-            <td class="text-xs-center">{{ item.ticker }}</td>
-            <td class="text-xs-center">{{ item.ask | comma }}</td>
-            <td class="text-xs-center">{{ item.spread | comma }}</td>
-            <td class="text-xs-center">{{ item.bid | comma }}</td>
-          </template>
-        </v-data-table>
+      <v-flex xs4 d-flex>
+        <v-ask-bid :items="items"></v-ask-bid>
       </v-flex>
-      <v-flex xs6>
-        <v-data-table :headers="headers" :items="items">
-          <template #items="{item}">
-            <td class="text-xs-center">{{ item.ticker }}</td>
-            <td class="text-xs-center">{{ item.ask | comma }}</td>
-            <td class="text-xs-center">{{ item.spread | comma }}</td>
-            <td class="text-xs-center">{{ item.bid | comma }}</td>
-          </template>
-        </v-data-table>
+      <v-layout row wrap>
+        <v-flex xs12 d-flex>
+          <v-rate></v-rate>
+        </v-flex>
+      </v-layout>
+      <v-flex xs4 d-flex>
+        <v-trade></v-trade>
+      </v-flex>
+
+      <v-flex xs4>
+        <v-order-book :items="item"></v-order-book>
       </v-flex>
     </v-layout>
-    <p>{{ ticker }}</p>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -32,34 +26,35 @@ import {
   GET_ORDER,
   GET_EXCHANGE_RATE
 } from '~/store/mutation-types'
+import VAskBid from '~/components/molecules/VAskBid'
+import VOrderBook from '~/components/molecules/VOrderBook'
+import VTrade from '~/components/molecules/VTrade'
+import VRate from '~/components/molecules/VRate'
+
 import { mapState, mapActions } from 'vuex'
 export default {
-  filters: {
-    comma: function(value) {
-      return value.toLocaleString()
-    }
+  components: {
+    VAskBid,
+    VOrderBook,
+    VTrade,
+    VRate
   },
+
   data() {
     return {
-      id: undefined,
-      headers: [
-        { text: 'Ticker', value: 'ticker', align: 'center' },
-        { text: 'Ask', value: 'ask', align: 'center' },
-        { text: 'Spread', value: 'spread', align: 'center' },
-        { text: 'Bid', value: 'bid', align: 'center' }
-      ],
-      items: []
+      id: null,
+      items: [],
+      item: []
     }
   },
   computed: mapState('coincheck', ['ticker', 'order', 'exchangeRate']),
   created() {
-    console.log('created')
+    this.getTicker()
     this.id = setInterval(() => {
       this.getTicker()
-    }, 3000)
+    }, 5000)
   },
-  destroyed() {
-    console.log('destroyed')
+  beforeDestroy() {
     clearInterval(this.id)
   },
   methods: {
@@ -67,11 +62,7 @@ export default {
     async getTicker() {
       await this.GET_TICKER()
       const { ask, bid } = this.ticker
-      this.arraySplice(0, { ticker: 'BTCJPY', ask, bid, spread: ask - bid })
-      this.arraySplice(1, { ticker: 'XRPJPY', ask, bid, spread: 1 })
-    },
-    arraySplice(number, obj) {
-      this.items.splice(number, 1, obj)
+      this.items.splice(0, 1, { ticker: 'BTCJPY', ask, bid, spread: ask - bid })
     }
   }
 }
