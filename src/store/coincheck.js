@@ -34,29 +34,34 @@ export const mutations = {
 export const actions = {
   async [GET_TICKER]({ commit }) {
     await this.$axios
-      .$get('http://localhost:3000/api/ticker')
+      .$get('https://cranky-sinoussi-12fee2.netlify.com/api/ticker')
       .then(res => commit(GET_TICKER, res))
   },
   async [GET_ORDER]({ commit }) {
     await this.$axios
-      .$get('http://localhost:3000/api/order_books')
+      .$get('https://cranky-sinoussi-12fee2.netlify.com/api/order_books')
       .then(res => commit(GET_ORDER, res))
   },
   async [GET_EXCHANGE_RATE]({ commit }) {
     await this.$axios
-      .$get('http://localhost:3000/api/exchange/orders/rate')
+      .$get(
+        'https://cranky-sinoussi-12fee2.netlify.com/api/exchange/orders/rate'
+      )
       .then(res => commit(GET_EXCHANGE_RATE, res))
   },
   async [GET_STORE_RATE]({ commit }, pair) {
     await this.$axios
-      .$get(`http://localhost:3000/api/rate/${pair}`)
+      .$get(`https://cranky-sinoussi-12fee2.netlify.com/api/rate/${pair}`)
       .then(res => commit(GET_STORE_RATE, res))
   },
   async [GET_PRICE]({ commit }, { pair, orderType, price, amount }) {
     await this.$axios
-      .$get('http://localhost:3000/api/exchange/orders/rate', {
-        params: { pair, amount, price, order_type: orderType }
-      })
+      .$get(
+        'https://cranky-sinoussi-12fee2.netlify.com/api/exchange/orders/rate',
+        {
+          params: { pair, amount, price, order_type: orderType }
+        }
+      )
       .then(res => commit(GET_PRICE, res))
   }
 }
