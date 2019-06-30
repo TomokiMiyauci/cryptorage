@@ -9,7 +9,7 @@
     "precommit": "yarn run lint",
     "test": "jest",
     "dev": "nuxt",
-    "build": "nuxt build",
+    "build": "API_URL=/ nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "dev-debug": "node --inspect-brk=9229 node_modules/nuxt/bin/nuxt"
